@@ -14,13 +14,16 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "fedex"
 
-  s.add_dependency 'httparty',            '~> 0.11.0'
   s.add_dependency 'nokogiri',            '~> 1.5.0'
 
   s.add_development_dependency "rspec",   '~> 2.9.0'
   s.add_development_dependency 'vcr',     '~> 2.0.0'
   s.add_development_dependency 'fakeweb'
   # s.add_runtime_dependency "rest-client"
+
+  s.add_dependency 'em-synchrony', '~> 1.0.3'
+  s.add_dependency 'em-http-request', '~> 1.1.0'
+  s.add_dependency 'multi_xml'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

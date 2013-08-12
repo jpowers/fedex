@@ -1,14 +1,14 @@
-require 'httparty'
 require 'nokogiri'
 require 'fedex/helpers'
 require 'fedex/rate'
+require "em-synchrony"
+require "em-synchrony/em-http"
+require 'multi_xml'
 
 module Fedex
   module Request
     class Base
       include Helpers
-      include HTTParty
-      format :xml
       # If true the rate method will return the complete response from the Fedex Web Service
       attr_accessor :debug
       # Fedex Text URL
@@ -55,7 +55,15 @@ module Fedex
         raise NotImplementedError, "Override process_request in subclass"
       end
 
+      def self.post(url, options={})
+        http = EventMachine::HttpRequest.new(url).post(options)
+        if http.response_header.status == 200
+          MultiXml.parse(http.response)
+        end
+      end
+      
       private
+
       # Add web authentication detail information(key and password) to xml request
       def add_web_authentication_detail(xml)
         xml.WebAuthenticationDetail{
