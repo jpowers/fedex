@@ -9,6 +9,7 @@ require 'fedex/request/ground_close'
 require 'fedex/request/pickup'
 require 'fedex/request/pickup_availability'
 require 'fedex/request/service_availability'
+require 'fedex/request/signature_letter'
 
 module Fedex
   class Shipment
@@ -109,6 +110,10 @@ module Fedex
     # param [String] carrier_code, A string containing carrier code
     def service_availability(options = {})
       Request::ServiceAvailability.new(@credentials, options).process_request
+    end
+
+    def signature_letter(options = {})
+      Request::SignatureLetter.new(@credentials, options).process_request
     end
 
   end
