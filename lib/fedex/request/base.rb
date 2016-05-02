@@ -328,6 +328,13 @@ module Fedex
       # Add customs clearance(for international shipments)
       def add_customs_clearance(xml)
         xml.CustomsClearanceDetail{
+          xml.DutiesPayment{
+            hash_to_xml(xml, @customs_clearance_detail.delete(:duties_payment))
+          }
+          xml.DocumentContent @customs_clearance_detail.delete(:document_content)
+          xml.CustomsValue{
+            hash_to_xml(xml, @customs_clearance_detail.delete(:customs_value))
+          }
           hash_to_xml(xml, @customs_clearance_detail)
         }
       end
